@@ -9,16 +9,18 @@ import tyrell from "../img/Tyrell_symbol.png";
 import {Switch, Route, Link, BrowserRouter} from "react-router-dom";
 import Hero from "./Hero";
 import Area from "./Area";
+import Heroes from "./Heroes";
 
 
 const styleP = {
-    display : "inline"
+    display : "block-inline"
 };
 
 const styleDIV = {
     display : "flex",
     justifyContent : "center"
 }
+
 
 class Header extends React.Component{
 
@@ -100,9 +102,10 @@ class Header extends React.Component{
                             <p>
                                 <Link to='/areas'>Посмотреть владения Дома</Link>
                             </p>
+
                         </div>
                         <Switch>
-                            <Route path='/heroes' render={(props) => (<Hero house={this.state.house}/>)}/>
+                            <Route path='/heroes' render={(props) => (<Heroes house={this.state.house}/>)}/>
                             <Route path='/areas' component={Area}/>
                         </Switch>
                     </BrowserRouter>

@@ -1,41 +1,30 @@
 import React from "react";
-import {useEffect} from "react";
 
 
 class Hero extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state ={
-            data : ""
-        };
     }
 
 
-
-    componentDidMount() {
-        fetch("http://localhost:8080/heroes?house=" + this.props.house)
-            .then(res => res.json())
-            .then(response => {
-               this.setState({data : response})
-            });
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.house !== this.props.house){
-            fetch("http://localhost:8080/heroes?house=" + this.props.house)
-                .then(res => res.json())
-                .then(response => {
-                    this.setState({data : response})
-                });
-        }
-    }
 
 
     render() {
         return(
             <div>
-                <p>Hello from {this.props.house}</p>
+                {this.props.array.map((elem) => {
+                    if (elem.name === this.props.name)
+                        return (
+                            <div>
+                                <p>Сила в атаке - {elem.forceAttack}</p>
+                                <p>Сила в защите - {elem.forceDefend}</p>
+                                <p>Умение кастеляна - {elem.skillCastle}</p>
+                                <p>Боевое умение - {elem.skillWar}</p>
+                                <p>Питомец - {elem.pet === null ? 'Нет' : elem.pet.name}</p>
+                                <p>Резервист - {elem.reserve == true ? 'Да' : 'Нет'}</p>
+                            </div>);
+                })}
             </div>
         );
     }
