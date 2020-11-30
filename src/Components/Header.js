@@ -6,32 +6,56 @@ import baratheon from "../img/Baratheon_symbol.png";
 import martel from "../img/Martel_symbol.png";
 import stark from "../img/Stark_symbol.png";
 import tyrell from "../img/Tyrell_symbol.png";
-import "../Styles/headerStyle.module.css";
-import background from "../img/background.png";
+import {Switch, Route, Link, BrowserRouter} from "react-router-dom";
+import Hero from "./Hero";
+import Area from "./Area";
 
 
+const styleP = {
+    display : "inline"
+};
 
-
-
+const styleDIV = {
+    display : "flex",
+    justifyContent : "center"
+}
 
 class Header extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = { house: ""};
+        this.state = {
+            house: "Ланнистеры",
+            gold: 0
+        };
         this.choseHouse = this.choseHouse.bind(this);
     }
 
-    choseHouse(id){
+    componentDidMount() {
+        fetch("http://localhost:8080/house?house=" + this.state.house)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        gold : result.countGold
+                    })
+                }
+            );
+    }
 
-        switch (id) {
-            case 1: this.setState({house: "Ланнистеры"}); break;
-            case 2: this.setState({house: "Грейджои"}); break;
-            case 3: this.setState({house: "Баратеоны"});  break;
-            case 4: this.setState({house: "Мартеллы"}); break;
-            case 5: this.setState({house: "Старки"}); break;
-            case 6: this.setState({house: "Тиреллы"}); break;
-        }
+
+    choseHouse(house){
+
+        fetch("http://localhost:8080/house?house=" + house)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        house : house,
+                        gold : result.countGold
+                    })
+                }
+            );
     }
 
 
@@ -39,29 +63,50 @@ class Header extends React.Component{
     render(){
         return(
             <div>
-                <div>
+                <div style={styleDIV}>
                     <p>
-                        <img onClick={(elem) =>this.choseHouse(1)} src={lannister} alt="Ланнистеры" width="100" height="100"/>
+                        <img onClick={(elem) =>this.choseHouse("Ланнистеры")} src={lannister} alt="Ланнистеры" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse(2)}  src={greyjoy} alt="Грейджои" width="100" height="100"/>
+                        <img onClick={(elem) => this.choseHouse("Грейджои")}  src={greyjoy} alt="Грейджои" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse(3)} src={baratheon} alt="Баратеоны" width="100" height="100"/>
+                        <img onClick={(elem) => this.choseHouse("Баратеоны")} src={baratheon} alt="Баратеоны" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) =>this.choseHouse(4)} src={martel} alt="Мартеллы" width="100" height="100"/>
+                        <img onClick={(elem) =>this.choseHouse("Мартеллы")} src={martel} alt="Мартеллы" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse(5)} src={stark} alt="Старки" width="100" height="100"/>
+                        <img onClick={(elem) => this.choseHouse("Старки")} src={stark} alt="Старки" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse(6)} src={tyrell} alt="Тиреллы" width="100" height="100"/>
+                        <img onClick={(elem) => this.choseHouse("Тиреллы")} src={tyrell} alt="Тиреллы" width="100" height="100"/>
                     </p>
 
                 </div>
-                
+                <div>
+                    <p>Дом - {this.state.house}</p>
+                    <p>Количество золота - {this.state.gold} у. е.</p>
 
+                </div>
+
+
+                <div>
+                    <BrowserRouter>
+                        <div>
+                            <p>
+                                <Link to='/heroes'>Посмотреть лидеров Дома</Link>
+                            </p>
+                            <p>
+                                <Link to='/areas'>Посмотреть владения Дома</Link>
+                            </p>
+                        </div>
+                        <Switch>
+                            <Route path='/heroes' render={(props) => (<Hero house={this.state.house}/>)}/>
+                            <Route path='/areas' component={Area}/>
+                        </Switch>
+                    </BrowserRouter>
+                </div>
             </div>
 
 
