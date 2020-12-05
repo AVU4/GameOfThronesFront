@@ -99,7 +99,7 @@ class Header extends React.Component{
                         </div>
                         <Switch>
                             <Route path='/information' render={(props) => (<Information house={this.state.house}/>)}/>
-                            <Route path='/warfare' render={(props) => (<Warfare house = {this.state.house}/>)}/>
+                            <Route path='/warfare' render={(props) => (<Warfare house={this.state.house}/>)}/>
                         </Switch>
                     </BrowserRouter>
                 </div>
