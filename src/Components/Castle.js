@@ -6,7 +6,7 @@ const divStyle = {
     borderRadius: '10px'
 };
 
-class Area extends React.Component {
+class Castle extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,14 +20,15 @@ class Area extends React.Component {
                         return (
                             <div>
                                 <p>Название - {elem.name}</p>
-                                <p>Владелец территории - {elem.houseOwner.name}</p>
-                                <p>Количество крестьян - {elem.countPeasants}</p>
+                                <p>Месторасположение - {elem.country.name}</p>
+                                <p>Уровень обороны - {elem.forceDefense}</p>
+                                <p>Особенность - {elem.uniqueCondition}</p>
                             </div>);
                 })}
             </div>
         );
     }
+
 }
 
-
-export default Area;
+export default Castle;

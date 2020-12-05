@@ -7,9 +7,9 @@ import martel from "../img/Martel_symbol.png";
 import stark from "../img/Stark_symbol.png";
 import tyrell from "../img/Tyrell_symbol.png";
 import {Switch, Route, Link, BrowserRouter} from "react-router-dom";
-import Hero from "./Hero";
-import Area from "./Area";
 import Heroes from "./Heroes";
+import Areas from "./Areas";
+import Castles from "./Castles";
 
 
 const styleP = {
@@ -102,11 +102,15 @@ class Header extends React.Component{
                             <p>
                                 <Link to='/areas'>Посмотреть владения Дома</Link>
                             </p>
+                            <p>
+                                <Link to='/castles'>Посмотреть замки Дома</Link>
+                            </p>
 
                         </div>
                         <Switch>
                             <Route path='/heroes' render={(props) => (<Heroes house={this.state.house}/>)}/>
-                            <Route path='/areas' component={Area}/>
+                            <Route path='/areas' render={(props) => (<Areas house={this.state.house}/>)}/>
+                            <Route path='/castles' render={(props) => (<Castles house={this.state.house}/>)}></Route>
                         </Switch>
                     </BrowserRouter>
                 </div>

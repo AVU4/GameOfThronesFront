@@ -1,5 +1,10 @@
 import React from "react";
 
+const divStyle = {
+    width: '300px',
+    border: '2px solid #000',
+    borderRadius: '10px'
+};
 
 class Hero extends React.Component {
 
@@ -10,13 +15,15 @@ class Hero extends React.Component {
 
 
 
+
     render() {
         return(
-            <div>
+            <div style={divStyle}>
                 {this.props.array.map((elem) => {
                     if (elem.name === this.props.name)
                         return (
                             <div>
+                                <p>Имя персонажа - {elem.name}</p>
                                 <p>Сила в атаке - {elem.forceAttack}</p>
                                 <p>Сила в защите - {elem.forceDefend}</p>
                                 <p>Умение кастеляна - {elem.skillCastle}</p>
