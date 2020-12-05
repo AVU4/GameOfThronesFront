@@ -7,18 +7,14 @@ import martel from "../img/Martel_symbol.png";
 import stark from "../img/Stark_symbol.png";
 import tyrell from "../img/Tyrell_symbol.png";
 import {Switch, Route, Link, BrowserRouter} from "react-router-dom";
-import Heroes from "./Heroes";
-import Areas from "./Areas";
-import Castles from "./Castles";
+import Information from "./Information";
+import Warfare from "./Warfare";
 
-
-const styleP = {
-    display : "block-inline"
-};
 
 const styleDIV = {
     display : "flex",
-    justifyContent : "center"
+    justifyContent : "center",
+
 }
 
 
@@ -91,32 +87,23 @@ class Header extends React.Component{
                     <p>Количество золота - {this.state.gold} у. е.</p>
 
                 </div>
-
-
                 <div>
                     <BrowserRouter>
                         <div>
-                            <p>
-                                <Link to='/heroes'>Посмотреть лидеров Дома</Link>
+                            <p style={{display : "inline-block", marginRight : "10px"}}>
+                                <Link to='/information'>Посмотреть информацию о Доме</Link>
                             </p>
-                            <p>
-                                <Link to='/areas'>Посмотреть владения Дома</Link>
+                            <p style={{display : "inline-block", marginRight : "10px"}}>
+                                <Link to='/warfare'>Военное дело Дома</Link>
                             </p>
-                            <p>
-                                <Link to='/castles'>Посмотреть замки Дома</Link>
-                            </p>
-
                         </div>
                         <Switch>
-                            <Route path='/heroes' render={(props) => (<Heroes house={this.state.house}/>)}/>
-                            <Route path='/areas' render={(props) => (<Areas house={this.state.house}/>)}/>
-                            <Route path='/castles' render={(props) => (<Castles house={this.state.house}/>)}></Route>
+                            <Route path='/information' render={(props) => (<Information house={this.state.house}/>)}/>
+                            <Route path='/warfare' render={(props) => (<Warfare house = {this.state.house}/>)}/>
                         </Switch>
                     </BrowserRouter>
                 </div>
             </div>
-
-
         );
     }
 }
