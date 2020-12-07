@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch, Link} from "react-router-dom";
 import Army from "./Army";
+import Shop from "./Shop";
 
 class Warfare extends React.Component {
 
@@ -51,8 +52,10 @@ class Warfare extends React.Component {
                     {this.state.data.map(elem =>(
                         <p><Link onClick={(e) => (this.setArmyId(elem.id))} to='/army'>{"Армия " + elem.id}</Link> </p>
                     ))}
+                    <p><Link to='/shop'>Покупка армии</Link></p>
                     <Switch>
                         <Route path='/army' render={(e) => <Army array={this.state.data} id={this.state.armyId}/>}/>
+                        <Route path='/shop' render={(e) => <Shop array={this.state.data} house={this.props.house}/>}/>
                     </Switch>
                 </BrowserRouter>
 
