@@ -1,5 +1,22 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+import {changeArmyData, changeGold} from "../Store/actions";
+
+const putStateToProps = (state) => {
+    return {
+        gold: state.gold,
+        house: state.house,
+        armyData: state.armyData
+    };
+};
+
+const putActionToProps = (dispatch) => {
+    return {
+        changeGold : bindActionCreators(changeGold, dispatch),
+        changeArmyData : bindActionCreators(changeArmyData, dispatch)
+    };
+}
 
 class Shop extends React.Component {
 
@@ -7,7 +24,6 @@ class Shop extends React.Component {
         super(props);
         this.state = {
             armyId : "",
-            data : [],
             types : [],
             type : "",
             number : ""
@@ -42,6 +58,7 @@ class Shop extends React.Component {
     }
 
 
+
     handleChangeArmyId(event) {
         this.setState({
             armyId : event.target.value
@@ -59,24 +76,31 @@ class Shop extends React.Component {
     }
 
     handleOnSubmit(e){
-        if (this.state.number !== "" && this.state.armyId !== "" && this.state.type !== ""){
-            alert(this.state.number + " " + this.state.armyId + " " + this.state.type);
+        if (this.state.number !== "" && this.state.armyId !== "" && this.state.type !== "") {
             const parameters = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                        number : this.state.number,
-                        armyId : this.state.armyId,
-                        type : this.state.type,
-                        house : this.props.house
+                    number: this.state.number,
+                    armyId: this.state.armyId,
+                    type: this.state.type,
+                    house: this.props.house
                 })
             }
             fetch('http://localhost:8080/squad', parameters)
                 .then(response => response.json())
                 .then(res => {
-                    alert(res);
-                })
+                    this.props.changeArmyData(res);
+                    fetch('http://localhost:8080/house?house=' + this.props.house)
+                        .then(response => response.json())
+                        .then(res => {
+                            this.props.changeGold(res.countGold);
+                        })
+                });
+
         }
+
+
         e.preventDefault();
     }
 
@@ -99,7 +123,7 @@ class Shop extends React.Component {
                 <p>Выберите армию из списка</p>
                 <form onSubmit={this.handleOnSubmit}>
                     <select onClick={this.handleChangeArmyId} onChange={this.handleChangeArmyId}>
-                        {this.props.array.map((elem) => {
+                        {this.props.armyData.map((elem) => {
                             return(<option value={elem.id}>{"Армия " + elem.id}</option>);
                         })}
                     </select>
@@ -115,4 +139,4 @@ class Shop extends React.Component {
         );
     }
 }
-export default Shop;
+export default connect(putStateToProps, putActionToProps) (Shop);

@@ -66,9 +66,7 @@ class Warfare extends React.Component {
                     <p><Link to='/shop'>Покупка армии</Link></p>
                     <Switch>
                         <Route path='/army' render={(e) => <Army array={this.props.armyData} id={this.state.armyId}/>}/>
-                        <Route path='/shop' render={(e) =>
-                                    <Shop array={this.props.armyData} house={this.props.house}/>
-                        }/>
+                        <Route path='/shop' render={(e) => <Shop/>}/>
                     </Switch>
                 </BrowserRouter>
 
