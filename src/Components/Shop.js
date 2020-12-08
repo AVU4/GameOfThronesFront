@@ -26,7 +26,11 @@ class Shop extends React.Component {
             armyId : "",
             types : [],
             type : "",
-            number : ""
+            number : "",
+            reserves : [],
+            freeCountry : [],
+            nameCountry : "",
+            name : ""
         }
 
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -35,17 +39,11 @@ class Shop extends React.Component {
         this.handleChangeType = this.handleChangeType.bind(this);
         this.setArmyDefault = this.setArmyDefault.bind(this);
         this.setTypeDefault = this.setTypeDefault.bind(this);
+        this.handleChangeNameCountry = this.handleChangeNameCountry.bind(this);
+        this.handleChangeName = this.handleChangeName.bind(this);
+        this.handleOnSubmitCreating = this.handleOnSubmitCreating.bind(this);
 
     }
-
-    // getReserve() {
-    //     fetch("http://localhost:8080/reserve?house=" + this.props.house)
-    //         .then(res => res.json())
-    //         .then(response => {
-    //             this.setState({data: response})
-    //         });
-    // }
-
 
     componentWillMount() {
         fetch("http://localhost:8080/typesquads")
@@ -55,8 +53,36 @@ class Shop extends React.Component {
                     types : response,
                 })
             });
+
+        fetch("http://localhost:8080/reserve?house=" + this.props.house)
+            .then(res => res.json())
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    reserves : response
+                })
+            });
+        fetch("http://localhost:8080/freecountry")
+            .then(res => res.json())
+            .then(response => {
+                this.setState({
+                    freeCountry : response
+                })
+            })
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.house !== this.props.house){
+            fetch("http://localhost:8080/reserve?house=" + this.props.house)
+                .then(res => res.json())
+                .then(response => {
+                    console.log(response)
+                    this.setState({
+                        reserves : response
+                    })
+                });
+        }
+    }
 
 
     handleChangeArmyId(event) {
@@ -71,8 +97,39 @@ class Shop extends React.Component {
         })
     }
 
+    handleChangeNameCountry(event){
+        this.setState({
+            nameCountry : event.target.value
+        })
+    }
+
+    handleChangeName(event){
+        this.setState({name : event.target.value})
+    }
+
     handleChangeNumber(e){
         this.setState({number : e.target.value})
+    }
+
+    handleOnSubmitCreating(e) {
+        if (this.state.name !== "" && this.state.nameCountry !== ""){
+            const parameters = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: this.state.name,
+                    nameCountry: this.state.nameCountry,
+                    nameHouse: this.props.house
+                })
+            }
+            fetch('http://localhost:8080/army', parameters)
+                .then(response => response.json())
+                .then(res => {
+                    this.props.changeArmyData(res);
+                });
+        }
+
+        e.preventDefault();
     }
 
     handleOnSubmit(e){
@@ -120,7 +177,7 @@ class Shop extends React.Component {
     render(){
         return(
             <div>
-                <p>Выберите армию из списка</p>
+                <p>Покупка отряда</p>
                 <form onSubmit={this.handleOnSubmit}>
                     <select onClick={this.handleChangeArmyId} onChange={this.handleChangeArmyId}>
                         {this.props.armyData.map((elem) => {
@@ -135,6 +192,21 @@ class Shop extends React.Component {
                     <input placeholder="Введите число солдат" type="number" onChange={this.handleChangeNumber}/>
                     <input type="submit" value="Купить"/>
                 </form>
+                    <p>Создание армии</p>
+                    <form onSubmit={this.handleOnSubmitCreating}>
+                        <select onClick={this.handleChangeName} onChange={this.handleChangeName}>
+                            {this.state.reserves.map((elem) => {
+                                return (<option value={elem.name}>{elem.name}</option>);
+                            })}
+                        </select>
+                        <select onClick={this.handleChangeNameCountry} onChange={this.handleChangeNameCountry}>
+                            {this.state.freeCountry.map((elem) => {
+                                return (<option value={elem.name}>{elem.name}</option> );
+                            })}
+                        </select>
+                        <input type="submit" value="Создать"/>
+                    </form>
+
             </div>
         );
     }
