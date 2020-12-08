@@ -6,6 +6,7 @@ import Castles from "./Castles";
 import Captives from "./Captives";
 
 
+
 class Information extends React.Component {
 
     constructor(props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 class Shop extends React.Component {
 
@@ -18,6 +19,7 @@ class Shop extends React.Component {
         this.handleChangeType = this.handleChangeType.bind(this);
         this.setArmyDefault = this.setArmyDefault.bind(this);
         this.setTypeDefault = this.setTypeDefault.bind(this);
+
     }
 
     // getReserve() {
@@ -29,7 +31,7 @@ class Shop extends React.Component {
     // }
 
 
-    componentDidMount() {
+    componentWillMount() {
         fetch("http://localhost:8080/typesquads")
             .then(res => res.json())
             .then(response => {
@@ -48,7 +50,7 @@ class Shop extends React.Component {
 
     handleChangeType(event) {
         this.setState({
-            type : event.target.value.typeName
+            type : event.target.value
         })
     }
 
@@ -57,8 +59,8 @@ class Shop extends React.Component {
     }
 
     handleOnSubmit(e){
-        alert(this.state.number + " " + this.state.armyId + " " + this.state.type);
         if (this.state.number !== "" && this.state.armyId !== "" && this.state.type !== ""){
+            alert(this.state.number + " " + this.state.armyId + " " + this.state.type);
             const parameters = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -91,22 +93,19 @@ class Shop extends React.Component {
     }
 
 
-
     render(){
         return(
-            <div onLoad={this.getTypes}>
+            <div>
                 <p>Выберите армию из списка</p>
                 <form onSubmit={this.handleOnSubmit}>
                     <select onClick={this.handleChangeArmyId} onChange={this.handleChangeArmyId}>
-                        {this.props.array.map((elem, index) => {
-                            if (elem.id !== this.state.armyId && index === 0) this.setArmyDefault(elem.id)
+                        {this.props.array.map((elem) => {
                             return(<option value={elem.id}>{"Армия " + elem.id}</option>);
                         })}
                     </select>
-                    <select onClick={this.handleChangeType} onChange={this.handleChangeType} on>
-                        {this.state.types.map((elem, index) => {
-                            if (elem.typeName !== this.state.type && index === 0) this.setTypeDefault(elem.typeName);
-                            return (<option>{elem.typeName + " Стоимость " + elem.costs + " Боевая мощь единицы " + elem.forcePerPerson}</option>);
+                    <select onClick={this.handleChangeType} onChange={this.handleChangeType}>
+                        {this.state.types.map((elem) => {
+                            return (<option value={elem.typeName}>{elem.typeName + " Стоимость " + elem.costs + " Боевая мощь единицы " + elem.forcePerPerson}</option>);
                         })}
                     </select>
                     <input placeholder="Введите число солдат" type="number" onChange={this.handleChangeNumber}/>

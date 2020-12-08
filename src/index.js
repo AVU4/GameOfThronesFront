@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 import Header from "./Components/Header";
 import "./index.css";
 import reportWebVitals from './reportWebVitals';
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import {HeaderReducer} from "./Store/reducers";
 
+const store = createStore(HeaderReducer);
 
 ReactDOM.render(
   <React.StrictMode>
+      <Provider store={store}>
           <Header />
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

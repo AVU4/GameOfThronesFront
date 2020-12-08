@@ -3,14 +3,23 @@ import {BrowserRouter, Route, Switch, Link} from "react-router-dom";
 import Army from "./Army";
 import Shop from "./Shop";
 
+import {connect} from 'react-redux';
+
+const putStateToProps = (state) => {
+    return {
+        house: state.house,
+        gold: state.gold
+    };
+};
+
 class Warfare extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            house : props.house,
             data : [],
-            armyId : null
+            armyId : null,
+            flag : ""
         }
 
     }
@@ -21,9 +30,6 @@ class Warfare extends React.Component {
             .then(response => {
                this.setState({data : response})
             });
-        this.setState({
-            house : this.props.house
-        })
     }
 
     componentDidUpdate(prevProps) {
@@ -33,9 +39,6 @@ class Warfare extends React.Component {
                 .then(response => {
                     this.setState({data : response})
                 });
-            this.setState({
-                house : this.props.house
-            })
         }
     }
 
@@ -55,7 +58,9 @@ class Warfare extends React.Component {
                     <p><Link to='/shop'>Покупка армии</Link></p>
                     <Switch>
                         <Route path='/army' render={(e) => <Army array={this.state.data} id={this.state.armyId}/>}/>
-                        <Route path='/shop' render={(e) => <Shop array={this.state.data} house={this.props.house}/>}/>
+                        <Route path='/shop' render={(e) =>
+                                    <Shop array={this.state.data} house={this.props.house}/>
+                        }/>
                     </Switch>
                 </BrowserRouter>
 
@@ -64,4 +69,4 @@ class Warfare extends React.Component {
     }
 }
 
-export default Warfare;
+export default connect(putStateToProps)(Warfare);
