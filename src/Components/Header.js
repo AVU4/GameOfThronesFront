@@ -16,6 +16,7 @@ import {bindActionCreators} from "redux";
 
 export const ACTION_CHANGE_HOUSE = "ACTION_CHANGE_HOUSE";
 export const ACTION_CHANGE_GOLD = "ACTION_CHANGE_GOLD";
+export const ACTION_CHANGE_DATA_ARMY = "ACTION_CHANGE_DATA_ARMY";
 
 
 const styleDIV = {

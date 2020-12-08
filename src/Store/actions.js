@@ -1,4 +1,4 @@
-import {ACTION_CHANGE_GOLD, ACTION_CHANGE_HOUSE} from '../Components/Header';
+import {ACTION_CHANGE_DATA_ARMY, ACTION_CHANGE_GOLD, ACTION_CHANGE_HOUSE} from '../Components/Header';
 export const changeHouse = (newHouse) => {
     return {
         type: ACTION_CHANGE_HOUSE,
@@ -11,4 +11,11 @@ export const changeGold = (newGold) => {
         type: ACTION_CHANGE_GOLD,
         payload: newGold
     };
+}
+
+export const changeArmyData = (newData) => {
+    return {
+        type: ACTION_CHANGE_DATA_ARMY,
+        payload: newData
+    }
 }

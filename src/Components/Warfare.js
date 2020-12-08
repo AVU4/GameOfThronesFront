@@ -4,32 +4,39 @@ import Army from "./Army";
 import Shop from "./Shop";
 
 import {connect} from 'react-redux';
+import {changeArmyData} from "../Store/actions";
+import {bindActionCreators} from "redux";
 
 const putStateToProps = (state) => {
     return {
         house: state.house,
-        gold: state.gold
+        armyData: state.armyData
     };
 };
+
+const putActionToProps = (dispatch) => {
+    return {
+        changeArmyData : bindActionCreators(changeArmyData, dispatch)
+    };
+}
 
 class Warfare extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            data : [],
             armyId : null,
-            flag : ""
         }
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         fetch("http://localhost:8080/armies?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
-               this.setState({data : response})
-            });
+                    this.props.changeArmyData(response)
+                }
+            );
     }
 
     componentDidUpdate(prevProps) {
@@ -37,7 +44,7 @@ class Warfare extends React.Component {
             fetch("http://localhost:8080/armies?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
-                    this.setState({data : response})
+                    this.props.changeArmyData(response)
                 });
         }
     }
@@ -49,17 +56,18 @@ class Warfare extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         return(
             <div>
                 <BrowserRouter>
-                    {this.state.data.map(elem =>(
+                    {this.props.armyData.map(elem =>(
                         <p><Link onClick={(e) => (this.setArmyId(elem.id))} to='/army'>{"Армия " + elem.id}</Link> </p>
                     ))}
                     <p><Link to='/shop'>Покупка армии</Link></p>
                     <Switch>
-                        <Route path='/army' render={(e) => <Army array={this.state.data} id={this.state.armyId}/>}/>
+                        <Route path='/army' render={(e) => <Army array={this.props.armyData} id={this.state.armyId}/>}/>
                         <Route path='/shop' render={(e) =>
-                                    <Shop array={this.state.data} house={this.props.house}/>
+                                    <Shop array={this.props.armyData} house={this.props.house}/>
                         }/>
                     </Switch>
                 </BrowserRouter>
@@ -69,4 +77,4 @@ class Warfare extends React.Component {
     }
 }
 
-export default connect(putStateToProps)(Warfare);
+export default connect(putStateToProps, putActionToProps)(Warfare);

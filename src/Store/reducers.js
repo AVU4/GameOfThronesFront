@@ -1,4 +1,4 @@
-import {ACTION_CHANGE_GOLD, ACTION_CHANGE_HOUSE} from "../Components/Header";
+import {ACTION_CHANGE_DATA_ARMY, ACTION_CHANGE_GOLD, ACTION_CHANGE_HOUSE} from "../Components/Header";
 
 const initialState = {
     house: "Ланнистеры",
@@ -12,6 +12,8 @@ export const HeaderReducer = (state = initialState, action) => {
             return {...state, house : action.payload};
         case ACTION_CHANGE_GOLD :
             return {...state, gold: action.payload};
+        case ACTION_CHANGE_DATA_ARMY :
+            return {...state, armyData: action.payload};
     }
     return state;
 };
