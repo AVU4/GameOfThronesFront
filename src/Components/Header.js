@@ -18,6 +18,7 @@ import Politics from "./Politics";
 export const ACTION_CHANGE_HOUSE = "ACTION_CHANGE_HOUSE";
 export const ACTION_CHANGE_GOLD = "ACTION_CHANGE_GOLD";
 export const ACTION_CHANGE_DATA_ARMY = "ACTION_CHANGE_DATA_ARMY";
+export const ACTION_CHANGE_CAPTIVE_DATA = "ACTION_CHANGE_CAPTIVE_DATA";
 
 
 const styleDIV = {

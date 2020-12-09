@@ -1,18 +1,20 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {changeGold, changeHouse} from "../Store/actions";
+import {changeCaptiveData, changeGold, changeHouse} from "../Store/actions";
 
 const putStateToProps = (state) => {
     return {
         house: state.house,
-        gold: state.gold
+        gold: state.gold,
+        captiveData : state.captiveData
     };
 };
 
 const putActionToProps = (dispatch) => {
     return {
-        changeGold : bindActionCreators(changeGold, dispatch)
+        changeGold : bindActionCreators(changeGold, dispatch),
+        changeCaptiveData: bindActionCreators(changeCaptiveData, dispatch)
     };
 }
 
@@ -21,7 +23,6 @@ class Redemptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : [],
             captive : ""
         }
 
@@ -34,10 +35,20 @@ class Redemptions extends React.Component {
         fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
             .then(response => response.json())
             .then(res => {
-                this.setState({
-                    data : res
-                })
+                this.props.changeCaptiveData(res);
+
             })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.house != this.props.house) {
+            fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
+                .then(response => response.json())
+                .then(res => {
+                    this.props.changeCaptiveData(res);
+
+                })
+        }
     }
 
     changeCaptive(event) {
@@ -73,7 +84,7 @@ class Redemptions extends React.Component {
                 <form onSubmit={this.handleOnSubmit}>
 
                     <select onClick={this.changeCaptive} onChange={this.changeCaptive}>
-                        {this.state.data.map((elem) => {
+                        {this.props.captiveData.map((elem) => {
                             return(<option value={elem.hero.name}>{elem.hero.name}</option> );
                         })}
                     </select>
