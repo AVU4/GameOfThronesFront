@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import {changeGold, changeHouse} from "../Store/actions";
 import {bindActionCreators} from "redux";
 import Politics from "./Politics";
+import History from "./History";
 
 
 export const ACTION_CHANGE_HOUSE = "ACTION_CHANGE_HOUSE";
@@ -20,6 +21,7 @@ export const ACTION_CHANGE_GOLD = "ACTION_CHANGE_GOLD";
 export const ACTION_CHANGE_DATA_ARMY = "ACTION_CHANGE_DATA_ARMY";
 export const ACTION_CHANGE_CAPTIVE_DATA = "ACTION_CHANGE_CAPTIVE_DATA";
 export const ACTION_CHANGE_ENEMY_COUNTRY = "ACTION_CHANGE_ENEMY_COUNTRY";
+export const ACTION_HISTORY = "ACTION_HISTORY";
 
 
 const styleDIV = {
@@ -105,11 +107,15 @@ class Header extends React.Component{
                             <p style={{display : "inline-block", marginRight : "10px"}}>
                                 <Link to='/politics'>Политика Дома</Link>
                             </p>
+                            <p style={{display : "inline-block", marginRight : "10px"}}>
+                                <Link to='/history'>История</Link>
+                            </p>
                         </div>
                         <Switch>
                             <Route path='/information' render={(p) => (<Information house={this.props.house}/>)}/>
                             <Route path='/warfare' render={(p) => (<Warfare house={this.props.house}/>)}/>
                             <Route path='/politics' render={(p) => (<Politics house={this.props.house}/>)}/>
+                            <Route path='/history' render={(p) => (<History/>)}/>
                         </Switch>
                     </BrowserRouter>
                 </div>
