@@ -12,6 +12,7 @@ import Warfare from "./Warfare";
 import {connect} from 'react-redux';
 import {changeGold, changeHouse} from "../Store/actions";
 import {bindActionCreators} from "redux";
+import Politics from "./Politics";
 
 
 export const ACTION_CHANGE_HOUSE = "ACTION_CHANGE_HOUSE";
@@ -99,12 +100,14 @@ class Header extends React.Component{
                             <p style={{display : "inline-block", marginRight : "10px"}}>
                                 <Link to='/warfare'>Военное дело Дома</Link>
                             </p>
+                            <p style={{display : "inline-block", marginRight : "10px"}}>
+                                <Link to='/politics'>Политика Дома</Link>
+                            </p>
                         </div>
                         <Switch>
                             <Route path='/information' render={(p) => (<Information house={this.props.house}/>)}/>
-                            <Route path='/warfare' render={(p) => (
-                                    <Warfare house={this.props.house}/>
-                                )}/>
+                            <Route path='/warfare' render={(p) => (<Warfare house={this.props.house}/>)}/>
+                            <Route path='/politics' render={(p) => (<Politics house={this.props.house}/>)}/>
                         </Switch>
                     </BrowserRouter>
                 </div>
