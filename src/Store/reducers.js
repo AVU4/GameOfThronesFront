@@ -1,6 +1,6 @@
 import {
     ACTION_CHANGE_CAPTIVE_DATA,
-    ACTION_CHANGE_DATA_ARMY,
+    ACTION_CHANGE_DATA_ARMY, ACTION_CHANGE_ENEMY_COUNTRY,
     ACTION_CHANGE_GOLD,
     ACTION_CHANGE_HOUSE
 } from "../Components/Header";
@@ -9,7 +9,8 @@ const initialState = {
     house: "Ланнистеры",
     gold: 0,
     armyData: [],
-    captiveData: []
+    captiveData: [],
+    enemyCountries: []
 };
 
 export const HeaderReducer = (state = initialState, action) => {
@@ -22,6 +23,8 @@ export const HeaderReducer = (state = initialState, action) => {
             return {...state, armyData: action.payload};
         case ACTION_CHANGE_CAPTIVE_DATA :
             return {...state, captiveData: action.payload };
+        case ACTION_CHANGE_ENEMY_COUNTRY :
+            return {...state, enemyCountries: action.payload}
     }
     return state;
 };

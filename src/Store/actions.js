@@ -1,6 +1,6 @@
 import {
     ACTION_CHANGE_CAPTIVE_DATA,
-    ACTION_CHANGE_DATA_ARMY,
+    ACTION_CHANGE_DATA_ARMY, ACTION_CHANGE_ENEMY_COUNTRY,
     ACTION_CHANGE_GOLD,
     ACTION_CHANGE_HOUSE
 } from '../Components/Header';
@@ -9,6 +9,13 @@ export const changeHouse = (newHouse) => {
         type: ACTION_CHANGE_HOUSE,
         payload: newHouse
     };
+}
+
+export const changeEnemyCountry = (newData) => {
+    return {
+        type : ACTION_CHANGE_ENEMY_COUNTRY,
+        payload: newData
+    }
 }
 
 export const changeGold = (newGold) => {
