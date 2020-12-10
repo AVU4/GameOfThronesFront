@@ -70,7 +70,13 @@ class Redemptions extends React.Component {
             fetch('http://localhost:8080/captive', parameters)
                 .then(response => response.json())
                 .then(res => {
-                    this.props.changeGold(res)
+                    this.props.changeGold(res);
+                    fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
+                        .then(response => response.json())
+                        .then(res => {
+                            this.props.changeCaptiveData(res);
+
+                        })
                 });
         }
         e.preventDefault();

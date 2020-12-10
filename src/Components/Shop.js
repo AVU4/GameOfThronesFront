@@ -1,20 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
-import {changeArmyData, changeGold} from "../Store/actions";
+import {changeArmyData, changeFreeCountry, changeGold, changeReserves} from "../Store/actions";
 
 const putStateToProps = (state) => {
     return {
         gold: state.gold,
         house: state.house,
-        armyData: state.armyData
+        armyData: state.armyData,
+        reserves: state.reserves,
+        freeCountry: state.freeCountry
     };
 };
 
 const putActionToProps = (dispatch) => {
     return {
         changeGold : bindActionCreators(changeGold, dispatch),
-        changeArmyData : bindActionCreators(changeArmyData, dispatch)
+        changeArmyData : bindActionCreators(changeArmyData, dispatch),
+        changeReserves : bindActionCreators(changeReserves, dispatch),
+        changeFreeCountry : bindActionCreators(changeFreeCountry, dispatch)
     };
 }
 
@@ -27,8 +31,6 @@ class Shop extends React.Component {
             types : [],
             type : "",
             number : "",
-            reserves : [],
-            freeCountry : [],
             nameCountry : "",
             name : ""
         }
@@ -57,17 +59,12 @@ class Shop extends React.Component {
         fetch("http://localhost:8080/reserve?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
-                console.log(response)
-                this.setState({
-                    reserves : response
-                })
+                this.props.changeReserves(response);
             });
-        fetch("http://localhost:8080/freecountry")
+        fetch("http://localhost:8080/freecountry?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
-                this.setState({
-                    freeCountry : response
-                })
+                this.props.changeFreeCountry(response);
             })
     }
 
@@ -76,10 +73,7 @@ class Shop extends React.Component {
             fetch("http://localhost:8080/reserve?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
-                    console.log(response)
-                    this.setState({
-                        reserves : response
-                    })
+                    this.props.changeReserves(response)
                 });
         }
     }
@@ -126,7 +120,18 @@ class Shop extends React.Component {
                 .then(response => response.json())
                 .then(res => {
                     this.props.changeArmyData(res);
+                    fetch("http://localhost:8080/reserve?house=" + this.props.house)
+                        .then(res => res.json())
+                        .then(response => {
+                            this.props.changeReserves(response)
+                        });
+                    fetch("http://localhost:8080/freecountry?house=" + this.props.house)
+                        .then(res => res.json())
+                        .then(response => {
+                            this.props.changeFreeCountry(response);
+                        })
                 });
+
         }
 
         e.preventDefault();
@@ -195,12 +200,12 @@ class Shop extends React.Component {
                     <p>Создание армии</p>
                     <form onSubmit={this.handleOnSubmitCreating}>
                         <select onClick={this.handleChangeName} onChange={this.handleChangeName}>
-                            {this.state.reserves.map((elem) => {
+                            {this.props.reserves.map((elem) => {
                                 return (<option value={elem.name}>{elem.name}</option>);
                             })}
                         </select>
                         <select onClick={this.handleChangeNameCountry} onChange={this.handleChangeNameCountry}>
-                            {this.state.freeCountry.map((elem) => {
+                            {this.props.freeCountry.map((elem) => {
                                 return (<option value={elem.name}>{elem.name}</option> );
                             })}
                         </select>

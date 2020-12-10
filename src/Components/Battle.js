@@ -94,12 +94,13 @@ class Battle extends React.Component {
                 .then(res => {
                     this.props.changeArmyData(res.army)
                     document.getElementById("message").innerHTML = res.result;
+                    fetch("http://localhost:8080/enemycountry?house=" + this.props.house)
+                        .then(res => res.json())
+                        .then(response => {
+                            this.props.changeEnemyCountry(response);
+                        })
                 });
-            fetch("http://localhost:8080/enemycountry?house=" + this.props.house)
-                .then(res => res.json())
-                .then(response => {
-                    this.props.changeEnemyCountry(response);
-                })
+
         }
         event.preventDefault();
 
