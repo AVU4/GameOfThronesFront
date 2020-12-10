@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
-import {changeArmyData, changeFreeCountry, changeGold, changeReserves} from "../Store/actions";
-import {styleSelect} from "./Header";
+import {changeArmyData, changeFreeCountry, changeGold, changeMessage, changeReserves} from "../Store/actions";
 import "../index.css";
 
 const putStateToProps = (state) => {
@@ -20,7 +19,8 @@ const putActionToProps = (dispatch) => {
         changeGold : bindActionCreators(changeGold, dispatch),
         changeArmyData : bindActionCreators(changeArmyData, dispatch),
         changeReserves : bindActionCreators(changeReserves, dispatch),
-        changeFreeCountry : bindActionCreators(changeFreeCountry, dispatch)
+        changeFreeCountry : bindActionCreators(changeFreeCountry, dispatch),
+        changeMessage : bindActionCreators(changeMessage, dispatch)
     };
 }
 
@@ -120,8 +120,12 @@ class Shop extends React.Component {
                 })
             }
             fetch('http://localhost:8080/army', parameters)
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) return response.json();
+                    else throw new Error();
+                })
                 .then(res => {
+                    this.props.changeMessage("Удалось создать армию");
                     this.props.changeArmyData(res);
                     fetch("http://localhost:8080/reserve?house=" + this.props.house)
                         .then(res => res.json())
@@ -133,9 +137,10 @@ class Shop extends React.Component {
                         .then(response => {
                             this.props.changeFreeCountry(response);
                         })
-                });
+                })
+                .catch((error) => this.props.changeMessage("Создать армию не удалось"))
 
-        }
+        }else this.props.changeMessage("Не удалось отправить ворона");
 
         e.preventDefault();
     }
@@ -153,17 +158,22 @@ class Shop extends React.Component {
                 })
             }
             fetch('http://localhost:8080/squad', parameters)
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) return response.json();
+                    else throw new Error();
+                } )
                 .then(res => {
+                    this.props.changeMessage("Отряд добавлен в армию");
                     this.props.changeArmyData(res);
                     fetch('http://localhost:8080/house?house=' + this.props.house)
                         .then(response => response.json())
                         .then(res => {
                             this.props.changeGold(res.countGold);
                         })
-                });
+                })
+                .catch((error) => this.props.changeMessage("Не удалось собрать отряд"))
 
-        }
+        }else this.props.changeMessage("Не удалось отправить ворона");
 
 
         e.preventDefault();

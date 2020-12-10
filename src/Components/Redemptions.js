@@ -90,7 +90,7 @@ class Redemptions extends React.Component {
                     this.props.changeMessage("Сделка сорвалась!");
                 })
 
-        }
+        }else this.props.changeMessage("Не удалось отправить ворона");
         e.preventDefault();
     }
 

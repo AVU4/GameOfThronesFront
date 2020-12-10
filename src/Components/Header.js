@@ -35,13 +35,13 @@ const styleDIV = {
 }
 
 const styleImg = {
-    position : "absolute",
+    position : "fixed",
     bottom : "0",
     right : "0"
 }
 
 const styleSpeech = {
-    position: "absolute",
+    position: "fixed",
     bottom: "100px",
     right: "80px"
 }
@@ -131,11 +131,10 @@ class Header extends React.Component{
                             <Route path='/history' render={(p) => (<History/>)}/>
                         </Switch>
                     </BrowserRouter>
-                    <div style={styleSpeech}>
-                        <p className="speech">{this.props.message}</p>
-                    </div>
+                        <div style={styleSpeech}>
+                            <p className="speech">{this.props.message}</p>
+                        </div>
                         <img style={styleImg} src={crow} alt="crow" width="150px" height="150px"/>
-
                 </div>
             </div>
         );

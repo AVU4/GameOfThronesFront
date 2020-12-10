@@ -1,20 +1,22 @@
 import React from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
-import {changeArmyData, changeEnemyCountry} from "../Store/actions";
+import {changeArmyData, changeEnemyCountry, changeMessage} from "../Store/actions";
 
 const putStateToProps = (state) => {
     return {
         house: state.house,
         armyData: state.armyData,
-        enemyCountries: state.enemyCountries
+        enemyCountries: state.enemyCountries,
+        message: state.message
     };
 };
 
 const putActionToProps = (dispatch) => {
     return {
         changeArmyData : bindActionCreators(changeArmyData, dispatch),
-        changeEnemyCountry : bindActionCreators(changeEnemyCountry, dispatch)
+        changeEnemyCountry : bindActionCreators(changeEnemyCountry, dispatch),
+        changeMessage : bindActionCreators(changeMessage, dispatch)
     };
 }
 
@@ -90,18 +92,22 @@ class Battle extends React.Component {
                 })
             }
             fetch('http://localhost:8080/battle', parameters)
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) return response.json();
+                    else throw new Error()
+                })
                 .then(res => {
                     this.props.changeArmyData(res.army)
-                    document.getElementById("message").innerHTML = res.result;
+                    this.props.changeMessage(res.result)
                     fetch("http://localhost:8080/enemycountry?house=" + this.props.house)
                         .then(res => res.json())
                         .then(response => {
                             this.props.changeEnemyCountry(response);
                         })
-                });
+                })
+                .catch((error) => this.props.changeMessage("Нападение не удалось"))
 
-        }
+        }else this.props.changeMessage("Не удалось отправить ворона");
         event.preventDefault();
 
     }
