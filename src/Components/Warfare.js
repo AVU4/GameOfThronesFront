@@ -4,19 +4,21 @@ import Army from "./Army";
 import Shop from "./Shop";
 
 import {connect} from 'react-redux';
-import {changeArmyData} from "../Store/actions";
+import {changeArmyData, changeMessage} from "../Store/actions";
 import {bindActionCreators} from "redux";
 
 const putStateToProps = (state) => {
     return {
         house: state.house,
-        armyData: state.armyData
+        armyData: state.armyData,
+        message : state.message
     };
 };
 
 const putActionToProps = (dispatch) => {
     return {
-        changeArmyData : bindActionCreators(changeArmyData, dispatch)
+        changeArmyData : bindActionCreators(changeArmyData, dispatch),
+        changeMessage : bindActionCreators(changeMessage, dispatch)
     };
 }
 
@@ -31,6 +33,7 @@ class Warfare extends React.Component {
     }
 
     componentWillMount() {
+        this.props.changeMessage("Нет сообщений");
         fetch("http://localhost:8080/armies?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {

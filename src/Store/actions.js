@@ -2,12 +2,19 @@ import {
     ACTION_CHANGE_CAPTIVE_DATA,
     ACTION_CHANGE_DATA_ARMY, ACTION_CHANGE_ENEMY_COUNTRY, ACTION_CHANGE_FREECOUNTRY,
     ACTION_CHANGE_GOLD,
-    ACTION_CHANGE_HOUSE, ACTION_CHANGE_RESERVES, ACTION_HISTORY
+    ACTION_CHANGE_HOUSE, ACTION_CHANGE_MESSAGE, ACTION_CHANGE_RESERVES, ACTION_HISTORY
 } from '../Components/Header';
 export const changeHouse = (newHouse) => {
     return {
         type: ACTION_CHANGE_HOUSE,
         payload: newHouse
+    };
+}
+
+export const changeMessage = (newMessage) => {
+    return {
+      type : ACTION_CHANGE_MESSAGE,
+      payload : newMessage
     };
 }
 

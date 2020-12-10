@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {changeCaptiveData, changeGold, changeHouse} from "../Store/actions";
+import {changeCaptiveData, changeGold, changeHouse, changeMessage} from "../Store/actions";
 import {styleSelect} from "./Header";
 
 const putStateToProps = (state) => {
@@ -15,7 +15,8 @@ const putStateToProps = (state) => {
 const putActionToProps = (dispatch) => {
     return {
         changeGold : bindActionCreators(changeGold, dispatch),
-        changeCaptiveData: bindActionCreators(changeCaptiveData, dispatch)
+        changeCaptiveData: bindActionCreators(changeCaptiveData, dispatch),
+        changeMessage : bindActionCreators(changeMessage, dispatch)
     };
 }
 
@@ -33,6 +34,7 @@ class Redemptions extends React.Component {
 
 
     componentWillMount() {
+        this.props.changeMessage("Нет сообщений");
         fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
             .then(response => response.json())
             .then(res => {
@@ -69,16 +71,25 @@ class Redemptions extends React.Component {
                 })
             }
             fetch('http://localhost:8080/captive', parameters)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error();
+                    else return response.json();
+                })
                 .then(res => {
-                    this.props.changeGold(res);
-                    fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
-                        .then(response => response.json())
-                        .then(res => {
-                            this.props.changeCaptiveData(res);
+                        this.props.changeMessage("Выкуп прошёл успешно");
+                        this.props.changeGold(res);
+                        fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
+                            .then(response => response.json())
+                            .then(res => {
+                                this.props.changeCaptiveData(res);
 
-                        })
-                });
+                            })
+
+                })
+                .catch((error) =>{
+                    this.props.changeMessage("Сделка сорвалась!");
+                })
+
         }
         e.preventDefault();
     }

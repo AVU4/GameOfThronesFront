@@ -6,11 +6,12 @@ import baratheon from "../img/Baratheon_symbol.png";
 import martel from "../img/Martel_symbol.png";
 import stark from "../img/Stark_symbol.png";
 import tyrell from "../img/Tyrell_symbol.png";
+import crow from "../img/crow.png";
 import {Switch, Route, Link, BrowserRouter} from "react-router-dom";
 import Information from "./Information";
 import Warfare from "./Warfare";
 import {connect} from 'react-redux';
-import {changeGold, changeHouse} from "../Store/actions";
+import {changeGold, changeHouse, changeMessage} from "../Store/actions";
 import {bindActionCreators} from "redux";
 import Politics from "./Politics";
 import History from "./History";
@@ -24,6 +25,7 @@ export const ACTION_CHANGE_ENEMY_COUNTRY = "ACTION_CHANGE_ENEMY_COUNTRY";
 export const ACTION_HISTORY = "ACTION_HISTORY";
 export const ACTION_CHANGE_RESERVES = "ACTION_CHANGE_RESERVES"
 export const ACTION_CHANGE_FREECOUNTRY = "ACTION_CHANGE_FREECOUNTRY";
+export const ACTION_CHANGE_MESSAGE = "ACTION_CHANGE_MESSAGE";
 
 
 const styleDIV = {
@@ -32,10 +34,17 @@ const styleDIV = {
 
 }
 
+const styleImg = {
+    position : "absolute",
+    bottom : "0",
+    right : "0"
+}
 
-
-
-
+const styleSpeech = {
+    position: "absolute",
+    bottom: "100px",
+    right: "80px"
+}
 
 class Header extends React.Component{
 
@@ -47,13 +56,13 @@ class Header extends React.Component{
 
 
     componentDidMount() {
+        this.props.changeMessage("Нет сообщений");
         fetch("http://localhost:8080/house?house=" + this.props.house)
             .then(res => res.json())
             .then(
                 (result) => {
                     this.props.changeGold(result.countGold)
-                }
-            );
+                });
     }
 
 
@@ -122,6 +131,11 @@ class Header extends React.Component{
                             <Route path='/history' render={(p) => (<History/>)}/>
                         </Switch>
                     </BrowserRouter>
+                    <div style={styleSpeech}>
+                        <p className="speech">{this.props.message}</p>
+                    </div>
+                        <img style={styleImg} src={crow} alt="crow" width="150px" height="150px"/>
+
                 </div>
             </div>
         );
@@ -131,14 +145,16 @@ class Header extends React.Component{
 const putStateToProps = (state) => {
     return {
         house: state.house,
-        gold: state.gold
+        gold: state.gold,
+        message : state.message
     };
 };
 
 const putActionToProps = (dispatch) => {
     return {
         changeGold : bindActionCreators(changeGold, dispatch),
-        changeHouse : bindActionCreators(changeHouse, dispatch)
+        changeHouse : bindActionCreators(changeHouse, dispatch),
+        changeMessage : bindActionCreators(changeMessage, dispatch)
     };
 }
 

@@ -4,6 +4,21 @@ import Heroes from "./Heroes";
 import Areas from "./Areas";
 import Castles from "./Castles";
 import Captives from "./Captives";
+import {bindActionCreators} from "redux";
+import {changeGold, changeHouse, changeMessage} from "../Store/actions";
+import {connect} from "react-redux";
+
+const putStateToProps = (state) => {
+    return {
+        message : state.message
+    };
+};
+
+const putActionToProps = (dispatch) => {
+    return {
+        changeMessage : bindActionCreators(changeMessage, dispatch)
+    };
+}
 
 
 
@@ -17,6 +32,7 @@ class Information extends React.Component {
     }
 
     componentDidMount() {
+        this.props.changeMessage("Нет сообщений")
         this.setState({
             house : this.props.house
         })
@@ -61,4 +77,4 @@ class Information extends React.Component {
         );
     }
 }
-export default Information;
+export default connect(putStateToProps, putActionToProps)(Information);

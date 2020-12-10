@@ -1,17 +1,19 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {changeHistory} from "../Store/actions";
+import {changeHistory, changeMessage} from "../Store/actions";
 import {bindActionCreators} from "redux";
 
 const putStateToProps = (state) => {
     return {
-        histories : state.histories
+        histories : state.histories,
+        message : state.message
     };
 }
 
 const putActionToProps = (dispatch) => {
     return {
-        changeHistory : bindActionCreators(changeHistory, dispatch)
+        changeHistory : bindActionCreators(changeHistory, dispatch),
+        changeMessage : bindActionCreators(changeMessage, dispatch)
     };
 }
 
@@ -20,6 +22,7 @@ class History extends React.Component {
 
 
     componentDidMount() {
+        this.props.changeMessage("Нет сообщений");
         fetch('http://localhost:8080/history')
             .then(response => response.json())
             .then(res =>{

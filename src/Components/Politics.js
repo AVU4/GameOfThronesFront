@@ -3,6 +3,22 @@ import React from 'react';
 import {Link, BrowserRouter, Route, Switch} from "react-router-dom";
 import Redemptions from "./Redemptions";
 import Battle from "./Battle";
+import {bindActionCreators} from "redux";
+import {changeGold, changeHouse, changeMessage} from "../Store/actions";
+import {connect} from "react-redux";
+
+const putStateToProps = (state) => {
+    return {
+        message : state.message
+    };
+};
+
+const putActionToProps = (dispatch) => {
+    return {
+        changeMessage : bindActionCreators(changeMessage, dispatch)
+    };
+}
+
 
 class Politics extends React.Component {
 
@@ -30,4 +46,4 @@ class Politics extends React.Component {
     }
 }
 
-export default Politics;
+export default connect(putStateToProps, putActionToProps)(Politics);
