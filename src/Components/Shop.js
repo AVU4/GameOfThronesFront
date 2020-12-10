@@ -198,11 +198,13 @@ class Shop extends React.Component {
                 <p>Покупка отряда</p>
                 <form onSubmit={this.handleOnSubmit}>
                     <select  onClick={this.handleChangeArmyId} onChange={this.handleChangeArmyId}>
+                        <option value="" disabled selected>Выберите армию</option>
                         {this.props.armyData.map((elem) => {
                             return(<option value={elem.id}>{"Армия " + elem.id}</option>);
                         })}
                     </select>
                     <select onClick={this.handleChangeType} onChange={this.handleChangeType}>
+                        <option value="" disabled selected>Выберите тип отряда</option>
                         {this.state.types.map((elem) => {
                             return (<option value={elem.typeName}>{elem.typeName + " Стоимость " + elem.costs + " Боевая мощь единицы " + elem.forcePerPerson}</option>);
                         })}
@@ -213,11 +215,13 @@ class Shop extends React.Component {
                     <p>Создание армии</p>
                     <form onSubmit={this.handleOnSubmitCreating}>
                         <select onClick={this.handleChangeName} onChange={this.handleChangeName}>
+                            <option value="" disabled selected>Выберите армию</option>
                             {this.props.reserves.map((elem) => {
                                 return (<option value={elem.name}>{elem.name}</option>);
                             })}
                         </select>
                         <select onClick={this.handleChangeNameCountry} onChange={this.handleChangeNameCountry}>
+                            <option value="" disabled selected>Выберите территорию</option>
                             {this.props.freeCountry.map((elem) => {
                                 return (<option value={elem.name}>{elem.name}</option> );
                             })}

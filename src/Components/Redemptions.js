@@ -102,7 +102,8 @@ class Redemptions extends React.Component {
                 <form onSubmit={this.handleOnSubmit}>
 
                     <select onClick={this.changeCaptive} onChange={this.changeCaptive}>
-                        {this.props.captiveData.map((elem) => {
+                        <option value="" disabled selected>Выберите героя</option>
+                        {this.props.captiveData.map((elem, index) => {
                             return(<option value={elem.hero.name}>{elem.hero.name}</option> );
                         })}
                     </select>
