@@ -128,7 +128,7 @@ class Battle extends React.Component {
                             </div>
                         );
                     })}
-                    <input type="submit" value="Напасть"/>
+                    <input className="button" type="submit" value="Напасть"/>
                 </form>
                 <p id="message"/>
             </div>

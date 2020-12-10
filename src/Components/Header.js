@@ -35,6 +35,8 @@ const styleDIV = {
 
 
 
+
+
 class Header extends React.Component{
 
     constructor(props) {
@@ -73,22 +75,22 @@ class Header extends React.Component{
             <div>
                 <div style={styleDIV}>
                     <p>
-                        <img onClick={(elem) => this.choseHouse("Ланнистеры")} src={lannister} alt="Ланнистеры" width="100" height="100"/>
+                        <img className="img" onClick={(elem) => this.choseHouse("Ланнистеры")} src={lannister} alt="Ланнистеры" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse("Грейджои")}  src={greyjoy} alt="Грейджои" width="100" height="100"/>
+                        <img className="img" onClick={(elem) => this.choseHouse("Грейджои")}  src={greyjoy} alt="Грейджои" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse("Баратеоны")} src={baratheon} alt="Баратеоны" width="100" height="100"/>
+                        <img className="img" onClick={(elem) => this.choseHouse("Баратеоны")} src={baratheon} alt="Баратеоны" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse("Мартеллы")} src={martel} alt="Мартеллы" width="100" height="100"/>
+                        <img className="img" onClick={(elem) => this.choseHouse("Мартеллы")} src={martel} alt="Мартеллы" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse("Старки")} src={stark} alt="Старки" width="100" height="100"/>
+                        <img className="img" onClick={(elem) => this.choseHouse("Старки")} src={stark} alt="Старки" width="100" height="100"/>
                     </p>
                     <p>
-                        <img onClick={(elem) => this.choseHouse("Тиреллы")} src={tyrell} alt="Тиреллы" width="100" height="100"/>
+                        <img className="img" onClick={(elem) => this.choseHouse("Тиреллы")} src={tyrell} alt="Тиреллы" width="100" height="100"/>
                     </p>
 
                 </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {changeArmyData, changeFreeCountry, changeGold, changeReserves} from "../Store/actions";
+import {styleSelect} from "./Header";
+import "../index.css";
 
 const putStateToProps = (state) => {
     return {
@@ -21,6 +23,7 @@ const putActionToProps = (dispatch) => {
         changeFreeCountry : bindActionCreators(changeFreeCountry, dispatch)
     };
 }
+
 
 class Shop extends React.Component {
 
@@ -184,7 +187,7 @@ class Shop extends React.Component {
             <div>
                 <p>Покупка отряда</p>
                 <form onSubmit={this.handleOnSubmit}>
-                    <select onClick={this.handleChangeArmyId} onChange={this.handleChangeArmyId}>
+                    <select  onClick={this.handleChangeArmyId} onChange={this.handleChangeArmyId}>
                         {this.props.armyData.map((elem) => {
                             return(<option value={elem.id}>{"Армия " + elem.id}</option>);
                         })}
@@ -195,7 +198,7 @@ class Shop extends React.Component {
                         })}
                     </select>
                     <input placeholder="Введите число солдат" type="number" onChange={this.handleChangeNumber}/>
-                    <input type="submit" value="Купить"/>
+                    <input className="button" type="submit" value="Купить"/>
                 </form>
                     <p>Создание армии</p>
                     <form onSubmit={this.handleOnSubmitCreating}>
@@ -209,7 +212,7 @@ class Shop extends React.Component {
                                 return (<option value={elem.name}>{elem.name}</option> );
                             })}
                         </select>
-                        <input type="submit" value="Создать"/>
+                        <input className="button" type="submit" value="Создать"/>
                     </form>
 
             </div>

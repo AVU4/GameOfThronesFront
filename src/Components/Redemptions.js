@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {changeCaptiveData, changeGold, changeHouse} from "../Store/actions";
+import {styleSelect} from "./Header";
 
 const putStateToProps = (state) => {
     return {
@@ -94,7 +95,7 @@ class Redemptions extends React.Component {
                             return(<option value={elem.hero.name}>{elem.hero.name}</option> );
                         })}
                     </select>
-                    <input type="submit" value="Совершить сделку"/>
+                    <input className="button" type="submit" value="Совершить сделку"/>
                 </form>
             </div>
         );
