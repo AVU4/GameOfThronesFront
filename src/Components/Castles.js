@@ -13,7 +13,7 @@ class Castles extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/castles?house=" + this.props.house)
+        fetch("http://localhost:20860/castles?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                 this.setState({data : response})
@@ -22,7 +22,7 @@ class Castles extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.house !== this.props.house){
-            fetch("http://localhost:8080/castles?house=" + this.props.house)
+            fetch("http://localhost:20860/castles?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
                     this.setState({data : response})

@@ -35,7 +35,7 @@ class Redemptions extends React.Component {
 
     componentWillMount() {
         this.props.changeMessage("Нет сообщений");
-        fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
+        fetch("http://localhost:20860/othercaptives?house=" + this.props.house)
             .then(response => response.json())
             .then(res => {
                 this.props.changeCaptiveData(res);
@@ -45,7 +45,7 @@ class Redemptions extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.house != this.props.house) {
-            fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
+            fetch("http://localhost:20860/othercaptives?house=" + this.props.house)
                 .then(response => response.json())
                 .then(res => {
                     this.props.changeCaptiveData(res);
@@ -70,7 +70,7 @@ class Redemptions extends React.Component {
                     name : this.state.captive
                 })
             }
-            fetch('http://localhost:8080/captive', parameters)
+            fetch('http://localhost:20860/captive', parameters)
                 .then(response => {
                     if (!response.ok) throw new Error();
                     else return response.json();
@@ -78,7 +78,7 @@ class Redemptions extends React.Component {
                 .then(res => {
                         this.props.changeMessage("Выкуп прошёл успешно");
                         this.props.changeGold(res);
-                        fetch("http://localhost:8080/othercaptives?house=" + this.props.house)
+                        fetch("http://localhost:20860/othercaptives?house=" + this.props.house)
                             .then(response => response.json())
                             .then(res => {
                                 this.props.changeCaptiveData(res);

@@ -14,7 +14,7 @@ class Captives extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/captives?house=" + this.props.house)
+        fetch("http://localhost:20860/captives?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                 this.setState({data : response})
@@ -23,7 +23,7 @@ class Captives extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.house !== this.props.house){
-            fetch("http://localhost:8080/captives?house=" + this.props.house)
+            fetch("http://localhost:20860/captives?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
                     this.setState({data : response})

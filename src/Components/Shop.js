@@ -51,7 +51,7 @@ class Shop extends React.Component {
     }
 
     componentWillMount() {
-        fetch("http://localhost:8080/typesquads")
+        fetch("http://localhost:20860/typesquads")
             .then(res => res.json())
             .then(response => {
                 this.setState({
@@ -59,12 +59,12 @@ class Shop extends React.Component {
                 })
             });
 
-        fetch("http://localhost:8080/reserve?house=" + this.props.house)
+        fetch("http://localhost:20860/reserve?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                 this.props.changeReserves(response);
             });
-        fetch("http://localhost:8080/freecountry?house=" + this.props.house)
+        fetch("http://localhost:20860/freecountry?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                 this.props.changeFreeCountry(response);
@@ -73,7 +73,7 @@ class Shop extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.house !== this.props.house){
-            fetch("http://localhost:8080/reserve?house=" + this.props.house)
+            fetch("http://localhost:20860/reserve?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
                     this.props.changeReserves(response)
@@ -119,7 +119,7 @@ class Shop extends React.Component {
                     nameHouse: this.props.house
                 })
             }
-            fetch('http://localhost:8080/army', parameters)
+            fetch('http://localhost:20860/army', parameters)
                 .then(response => {
                     if (response.ok) return response.json();
                     else throw new Error();
@@ -127,12 +127,12 @@ class Shop extends React.Component {
                 .then(res => {
                     this.props.changeMessage("Удалось создать армию");
                     this.props.changeArmyData(res);
-                    fetch("http://localhost:8080/reserve?house=" + this.props.house)
+                    fetch("http://localhost:20860/reserve?house=" + this.props.house)
                         .then(res => res.json())
                         .then(response => {
                             this.props.changeReserves(response)
                         });
-                    fetch("http://localhost:8080/freecountry?house=" + this.props.house)
+                    fetch("http://localhost:20860/freecountry?house=" + this.props.house)
                         .then(res => res.json())
                         .then(response => {
                             this.props.changeFreeCountry(response);
@@ -157,7 +157,7 @@ class Shop extends React.Component {
                     house: this.props.house
                 })
             }
-            fetch('http://localhost:8080/squad', parameters)
+            fetch('http://localhost:20860/squad', parameters)
                 .then(response => {
                     if (response.ok) return response.json();
                     else throw new Error();
@@ -165,7 +165,7 @@ class Shop extends React.Component {
                 .then(res => {
                     this.props.changeMessage("Отряд добавлен в армию");
                     this.props.changeArmyData(res);
-                    fetch('http://localhost:8080/house?house=' + this.props.house)
+                    fetch('http://localhost:20860/house?house=' + this.props.house)
                         .then(response => response.json())
                         .then(res => {
                             this.props.changeGold(res.countGold);
@@ -215,7 +215,7 @@ class Shop extends React.Component {
                     <p>Создание армии</p>
                     <form onSubmit={this.handleOnSubmitCreating}>
                         <select onClick={this.handleChangeName} onChange={this.handleChangeName}>
-                            <option value="" disabled selected>Выберите армию</option>
+                            <option value="" disabled selected>Выберите лидера</option>
                             {this.props.reserves.map((elem) => {
                                 return (<option value={elem.name}>{elem.name}</option>);
                             })}

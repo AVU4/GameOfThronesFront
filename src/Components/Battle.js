@@ -35,13 +35,13 @@ class Battle extends React.Component {
     }
 
     componentWillMount() {
-        fetch("http://localhost:8080/armies?house=" + this.props.house)
+        fetch("http://localhost:20860/armies?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                     this.props.changeArmyData(response)
                 }
             );
-        fetch("http://localhost:8080/enemycountry?house=" + this.props.house)
+        fetch("http://localhost:20860/enemycountry?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                 this.props.changeEnemyCountry(response)
@@ -54,12 +54,12 @@ class Battle extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.house !== this.props.house){
-            fetch("http://localhost:8080/armies?house=" + this.props.house)
+            fetch("http://localhost:20860/armies?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
                     this.props.changeArmyData(response)
                 });
-            fetch("http://localhost:8080/enemycountry?house=" + this.props.house)
+            fetch("http://localhost:20860/enemycountry?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
                     this.props.changeEnemyCountry(response);
@@ -91,7 +91,7 @@ class Battle extends React.Component {
                     houseName: this.props.house
                 })
             }
-            fetch('http://localhost:8080/battle', parameters)
+            fetch('http://localhost:20860/battle', parameters)
                 .then(response => {
                     if (response.ok) return response.json();
                     else throw new Error()
@@ -99,7 +99,7 @@ class Battle extends React.Component {
                 .then(res => {
                     this.props.changeArmyData(res.army)
                     this.props.changeMessage(res.result)
-                    fetch("http://localhost:8080/enemycountry?house=" + this.props.house)
+                    fetch("http://localhost:20860/enemycountry?house=" + this.props.house)
                         .then(res => res.json())
                         .then(response => {
                             this.props.changeEnemyCountry(response);

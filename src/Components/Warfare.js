@@ -34,7 +34,7 @@ class Warfare extends React.Component {
 
     componentWillMount() {
         this.props.changeMessage("Нет сообщений");
-        fetch("http://localhost:8080/armies?house=" + this.props.house)
+        fetch("http://localhost:20860/armies?house=" + this.props.house)
             .then(res => res.json())
             .then(response => {
                     this.props.changeArmyData(response)
@@ -44,7 +44,7 @@ class Warfare extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.house !== this.props.house){
-            fetch("http://localhost:8080/armies?house=" + this.props.house)
+            fetch("http://localhost:20860/armies?house=" + this.props.house)
                 .then(res => res.json())
                 .then(response => {
                     this.props.changeArmyData(response)

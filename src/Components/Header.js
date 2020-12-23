@@ -57,7 +57,7 @@ class Header extends React.Component{
 
     componentDidMount() {
         this.props.changeMessage("Нет сообщений");
-        fetch("http://localhost:8080/house?house=" + this.props.house)
+        fetch("http://localhost:20860/house?house=" + this.props.house)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -68,7 +68,7 @@ class Header extends React.Component{
 
     choseHouse(house){
         this.props.changeHouse(house);
-        fetch("http://localhost:8080/house?house=" + house)
+        fetch("http://localhost:20860/house?house=" + house)
             .then(res => res.json())
             .then(
                 (result) => {

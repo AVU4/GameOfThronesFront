@@ -23,7 +23,7 @@ class History extends React.Component {
 
     componentDidMount() {
         this.props.changeMessage("Нет сообщений");
-        fetch('http://localhost:8080/history')
+        fetch('http://localhost:20860/history')
             .then(response => response.json())
             .then(res =>{
                 this.props.changeHistory(res)
